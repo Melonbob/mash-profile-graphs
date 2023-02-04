@@ -1,5 +1,5 @@
 ## mash-profile-graphs
-This is a collection of LaTeX and R Markdown source documents and instructions for generating target mash profile graphs.  While the below examples are nice, they are for one system that has its own set of contingencies and compromises.  They are also in metric units which most brewers in the US don't use.
+This is a collection of [LaTeX](https://www.latex-project.org) and [R Markdown](https://rmarkdown.rstudio.com) source documents and instructions for generating target mash profile graphs.  While the below examples are nice, they are for one system that has its own set of contingencies and compromises (read rates of heating and heat losses and equipment limitations).  They are also in metric units which most brewers in the US don't use.
 
 Here is a LaTeX example for an infusion-modified RIMS mash: [b-I-TR-I-3stepBeta-2INF-TmR_3INFmash-out.pdf](https://github.com/Melonbob/mash-profile-graphs/files/8156059/b-I-TR-I-3stepBeta-2INF-TmR_3INFmash-out.pdf)
 
