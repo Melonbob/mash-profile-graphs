@@ -1,0 +1,100 @@
+% MIT License
+
+% Copyright (c) 2022-2023 Melonbob (Robert F. Burgie) <brew.Melonbob@mac.com>
+
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+
+% The above copyright notice and this permission notice shall be included in all
+% copies or substantial portions of the Software.
+
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
+\documentclass{article}
+\usepackage[letterpaper,portrait]{geometry}
+\pagenumbering{gobble}
+\usepackage{pgfplots,textcomp}
+\pgfplotsset{width=12cm,compat=1.15}
+\begin{document}
+% 3-step: protein/dextrin rest mash-in; 2INF beta rest, TmodRIMS alpha rest; 3DEC-modRIMS mash-out
+% p-I-TR-D-TR
+\begin{tikzpicture}
+\begin{axis}[
+  title={3-step Protein/dextrin rest mash-in, INF-modRIMS, DEC-modRIMS mash-out},
+  xlabel={Time [Min]},
+  ylabel={Temperature [\textdegree{C}]},
+  xmin=0, xmax=115,
+  ymin=30, ymax=100,
+  xtick={0,15,30,45,60,75,90,105,120},
+  ytick={30,40,50,60,70,80,90,100},
+  % legend pos=north west,
+  ymajorgrids=true,
+  xmajorgrids=true,
+  grid style=thin,
+  %grid=major,
+  minor grid style=dashed,
+  yminorgrids=true,
+  xminorgrids=true,
+  yminorticks=true,
+  minor y tick num=4,
+  minor x tick num=2
+]
+\addplot [color=red, style=dashed,thick]
+  coordinates {
+    (0,62)% strike temp
+    (2,57)% mash-in 2.5:1 (40+4L on PR1 w/ 16kg) TMV=44+0.67*16=55L
+  };
+\node [color=blue] at (axis cs:12,54) {2.5:1+4L};
+\node [color=blue] at (axis cs:11,51) {TMV=   };
+\addplot [color=red, style=dashed,thick]
+  coordinates {
+    (10,98)(11,63)% 2INF 0.63:1 (10L on PR1 w/ 16kg) TMV=65L
+  };
+\node [color=blue] at (axis cs:12,90) {Mt-u+0.63:1 };
+\node [color=blue] at (axis cs:9,87) {TMV=   };
+\addplot [color=teal, style=thick]
+  coordinates {% pull 2DEC starting when T=64C, ~25'
+    (30,64)% 3DEC heat 10L thick (2:1 17v/v) 
+    (44,71)% 1C/2min (induction set 200F) then
+    (55,71)% 11' decoction rest until starch neg
+    (75,100)% 3DEC 1.5C/min (induction set 240F)
+    (85,100)% boil 10 min
+  };
+\node [color=teal] at (axis cs:33,75) {2:1 17v/v};
+\node [color=teal] at (axis cs:33,72) {Tset200\textdegree{F}};
+\node [color=teal] at (axis cs:73,80) {Tset240\textdegree{F}};
+\addplot [color=teal, style=dashed,thick]
+  coordinates {
+    (85,100)(86,71)% recombine
+  };
+\node [color=blue] at (axis cs:85,63) {$ \Delta T_{max}=4C $};
+\addplot [color=blue, style=thick]
+  coordinates {
+    (0,25)% initial grist temp
+    (2,57)% mash-in
+    (10,56)% 10' protein rest, cooling loss -4C/hr=-1C/15min
+    (11,63)% 2INF 0.63:1 10L on PR1
+    (20,62)% 10' beta rest, cooling loss -4C/hr=-1C/15min
+    (30,64)% 10' beta to alpha TmodRIMS 1C/5min, DEC pulled
+    (45,67)% 15' alpha TmodRIMS 1C/5min
+    (85,67)% 40' alpha rest, no cooling loss w/ RIMS
+    (86,71)% 3DEC recombined
+    (91,71)% 5' hi-alpha rest TmodRIMS until starch neg
+    (101,73)% TmodRIMS 1C/5min mash-out
+    (105,73)% 5' Lauter/ Mash bed settle/ no RIMS
+    (110,73)% 5' Vorlauf/ no hose
+  };
+%\legend{}
+ 
+\end{axis}
+\end{tikzpicture}
+\end{document}
