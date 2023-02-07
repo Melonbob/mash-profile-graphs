@@ -29,8 +29,6 @@ SOFTWARE.-->
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(readxl)
-library(ggplot2)
-library(stringr)
 library(tidyverse)
 ```
 
