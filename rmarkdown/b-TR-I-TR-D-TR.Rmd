@@ -56,7 +56,7 @@ profile_out <- prof +
   coord_cartesian(xlim = c(0,100), ylim = c(10,101), expand = FALSE) +
   labs(x="Time", y="Temp (C)", 
        title=str_c("Mash Profile ",mpWbsheet)) + 
-  scale_color_manual(values=c("forestgreen", "red", "blue", "red")) +
+  scale_color_manual(values=c("forestgreen", "red", "blue", "orange")) +
   theme_bw() +
   theme(panel.grid.minor = element_line(color="gray",
                                         linetype = "dashed"), 
