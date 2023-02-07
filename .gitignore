@@ -22,7 +22,7 @@ latex/*.log
 latex/*.synctex.gz
 
 # R Markdown files
-rmarkdown/*.pdf
+
 
 # Example code in package build process
 *-Ex.R
