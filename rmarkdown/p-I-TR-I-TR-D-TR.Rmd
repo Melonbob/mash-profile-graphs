@@ -53,7 +53,7 @@ prof <- ggplot(df_mash_long,
 
 profile_out <- prof + 
   geom_line() + 
-  coord_cartesian(xlim = c(0,120), ylim = c(10,100), expand = FALSE) +
+  coord_cartesian(xlim = c(0,120), ylim = c(10,101), expand = FALSE) +
   labs(x="Time", y="Temp (C)", 
        title=str_c("Mash Profile ",mpWbsheet)) + 
   scale_color_manual(values=c("forestgreen", "red", "red", "blue", "orange")) +
