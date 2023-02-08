@@ -1,0 +1,73 @@
+---
+#title: "b-TR-I-TR-D-TR"
+#author: "Melonbob"
+#date: "2023-02-06"
+output: pdf_document
+---
+<!--
+MIT License
+
+Copyright (c) 2022-2023 Melonbob (Robert F. Burgie) <brew.Melonbob@mac.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.-->
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(tidyverse)
+```
+
+```{r mp, echo=FALSE, message=FALSE, warning=FALSE}
+mpPath <- ""
+mpFilename <- "mashProfiles.xlsx"
+mpWbsheet <- "b-TR-I-TR-D-TR"
+mpShrange <- "A1:H25"
+
+mash <- read_xlsx(str_c(mpPath,mpFilename), 
+                  sheet = mpWbsheet, 
+                  range = mpShrange)
+
+df_mash <- data.frame(mash)
+
+df_mash_long <- df_mash %>%
+  select("t", "main", "strike", "inf2", "dec3") %>%
+  pivot_longer(-t, names_to = "step", values_to = "temp")
+
+prof <- ggplot(df_mash_long, 
+                aes(t,temp,colour = step, group = step))
+
+profile_out <- prof + 
+  geom_line() + 
+  coord_cartesian(xlim = c(0,100), ylim = c(10,101), expand = FALSE) +
+  labs(x="Time", y="Temp (C)", 
+       title=str_c("Mash Profile ",mpWbsheet)) + 
+  scale_color_manual(values=c("forestgreen", "red", "blue", "orange")) +
+  theme_bw() +
+  theme(panel.grid.minor = element_line(color="gray",
+                                        linetype = "dashed"), 
+        panel.grid.major = element_line(color = "gray", 
+                                        linetype = "solid"),
+        legend.position = c(0.9, 0.2)) +
+  scale_x_continuous(breaks = seq(10, 100, 10), 
+                     minor_breaks = seq(5, 95, 5)) +
+  scale_y_continuous(breaks = seq(20, 100, 10), 
+                     minor_breaks = seq(10, 100, 2))
+  
+plot(profile_out)
+
+```
